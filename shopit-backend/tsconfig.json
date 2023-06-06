@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "outDir": "./build",
+    "strict": true,
+    "esModuleInterop": true,
+    "module": "CommonJS", // "module": "CommonJS" should work too
+    "moduleResolution": "Node",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "resolveJsonModule":true,
+    "useUnknownInCatchVariables": false,
+    "forceConsistentCasingInFileNames": true
+
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "dist"],
+ "ts-node": {
+    "esm": true,
+    "experimentalSpecifierResolution": "node"
+  }
+}

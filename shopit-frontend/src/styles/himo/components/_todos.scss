@@ -1,0 +1,45 @@
+@use 'sass:math';
+
+.todo-list {
+  padding: $base-padding $base-padding * 2;
+  width: 600px;
+  position: relative;
+}
+
+.todo-dialog {
+  position: fixed;
+  z-index: 999;
+}
+.todo-form {
+  width: 100%;
+  display: flex;
+  gap: 5px;
+  justify-content: space-between;
+}
+.todo-input {
+  flex: 1;
+  color: black !important;
+}
+
+.todo-add-button {
+  color: black;
+}
+
+.todo-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.todo-text {
+  cursor: pointer;
+  padding: math.div($base-padding, 4);
+  &.completed {
+    text-decoration: line-through;
+  }
+}
+
+.todo-remove-button {
+  color: red;
+  background-color: transparent;
+}

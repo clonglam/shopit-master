@@ -1,0 +1,71 @@
+// board variables
+$cols: 10;
+$rows: 18;
+$tile-size: 20px;
+$border-width: 5px;
+
+// theme colors
+$primary: #326dee !default;
+$secondary: #1ac886 !default;
+$error: #d32752 !default;
+$info: #f6c31c !default;
+
+// color palette
+$colors: (
+  'primary': $primary,
+  'secondary': $secondary,
+  'error': $error,
+  'info': $info,
+  'blue': #1919e6,
+  'red': #e61919,
+  'yellow': #e6e619,
+  'green': #19e635,
+  'orange': #ffa600,
+  'purple': #9900ff,
+  'gray': #808080,
+  'black': black,
+  'white': white,
+) !default;
+
+// spacing
+$base-padding: 0.75rem !default;
+$base-margin: 0.75rem !default;
+
+// borders
+$base-border-thickness: 1px !default;
+$base-border-radius: 20px !default;
+
+// box-shadow
+$base-box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.1) !default;
+
+// font sizes
+$base-font-size: 1rem !default;
+$font-size-sm: $base-font-size * 0.75 !default;
+$font-size-md: $base-font-size * 0.85 !default;
+$font-size-lg: $base-font-size * 1.5 !default;
+$font-size-xl: $base-font-size * 2 !default;
+$font-size-xxl: $base-font-size * 3 !default;
+
+//breakpoints
+$breakpoints: 1200px;
+
+$color-0: #eaeaea;
+$color-1: #ff6600;
+$color-2: #eec900;
+$color-3: #0000ff;
+$color-4: #cc00ff;
+$color-5: #00ff00;
+$color-6: #66ccff;
+$color-7: #ff0000;
+
+/* Border Colors are all transparent colors. These will tint or shade the background color of the square. */
+$border-left-color: rgba(255, 255, 255, 0.2);
+$border-top-color: rgba(255, 255, 255, 0.33);
+$border-right-color: rgba(0, 0, 0, 0.15);
+$border-bottom-color: rgba(0, 0, 0, 0.5);
+
+/* Button Colors */
+$button-color-t: rgba(200, 200, 200, 1);
+$button-color-r: rgba(150, 150, 150, 1);
+$button-color-b: rgba(120, 120, 120, 1);
+$button-color-l: rgba(222, 222, 222, 1);

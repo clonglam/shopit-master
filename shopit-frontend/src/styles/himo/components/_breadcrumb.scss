@@ -1,0 +1,16 @@
+@use 'sass:math';
+
+.breadcrumb {
+  color: #aaa;
+  margin-bottom: $base-padding;
+  padding: 0 math.div($base-padding, 2);
+  font-size: $font-size-md;
+
+  .section {
+    padding: math.div($base-padding, 4);
+  }
+
+  .current {
+    color: #222;
+  }
+}

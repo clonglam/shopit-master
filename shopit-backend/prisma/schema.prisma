@@ -1,0 +1,186 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Collection {
+  id               Int                     @id @default(autoincrement())
+  title            String
+  slug             String                  @unique
+  description      String
+  thumbnail        String
+  products         CollectionsOnProducts[]
+  featureProduct   Product?                @relation(fields: [featureProductId], references: [id], onDelete: SetNull)
+  featureProductId Int?
+
+  createdAt DateTime @default(now())
+}
+
+model CollectionsOnProducts {
+  product      Product    @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId    Int
+  collection   Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  collectionId Int
+
+  @@id([productId, collectionId])
+}
+
+model Address {
+  street     String
+  city       String
+  state      String
+  country    String
+  postalCode String
+  user       User   @relation(onDelete: Cascade, fields: [userId], references: [id])
+  userId     Int
+
+  @@id([userId])
+}
+
+model Order {
+  id            Int           @id @default(autoincrement())
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime
+  user          User          @relation(fields: [userId], references: [id], onDelete: NoAction)
+  userId        Int
+  paymentStatus PaymentStatus
+  OrderItem     OrderItem[]
+}
+
+model OrderItem {
+  quantity  Int
+  unitPrice Int
+  orderId   Int
+  productId Int
+
+  Order   Order   @relation(fields: [orderId], references: [id], onDelete: NoAction)
+  Product Product @relation(fields: [productId], references: [id], onDelete: NoAction)
+
+  @@id([productId, orderId])
+  @@index([productId, orderId])
+}
+
+model Promotion {
+  id          Int       @id @default(autoincrement())
+  description String
+  discount    Float
+  products    Product[]
+}
+
+model Product {
+  id          Int      @id @default(autoincrement())
+  title       String
+  slug        String   @unique
+  description String
+  price       Float
+  SKU         String
+  gallery     String[]
+  hoverImage  String?
+  thumbnail   String?
+  inventory   Int
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  promotions            Promotion[]
+  cartItem              CartItem[]
+  orderItem             OrderItem[]
+  collectionsOnProducts CollectionsOnProducts[]
+  featuredCollection    Collection[]
+  TaggedItem            TaggedItem[]
+}
+
+model Profile {
+  id     Int    @id @default(autoincrement())
+  bio    String
+  userId Int    @unique
+  User   User   @relation(fields: [userId], references: [id])
+}
+
+enum PaymentStatus {
+  PENDING
+  FAILED
+  COMPLETED
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model Cart {
+  id        Int        @id @default(autoincrement())
+  createdAt DateTime   @default(now())
+  CartItem  CartItem[]
+}
+
+model CartItem {
+  cart      Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  cartId    Int
+  productId Int
+  quantity  Int
+
+  @@id([cartId, productId])
+  @@index([cartId, productId])
+}
+
+model User {
+  id       Int      @id @default(autoincrement())
+  email    String   @unique
+  password String
+  role     Role     @default(USER)
+  name     String
+  order    Order[]
+  profile  Profile?
+
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  OAuthToken OAuthToken[]
+  Address    Address[]
+}
+
+model OAuthProvider {
+  id           Int          @id @default(autoincrement())
+  name         String       @unique
+  clientId     String
+  clientSecret String
+  authUrl      String
+  tokenUrl     String
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  OAuthToken   OAuthToken[]
+}
+
+model OAuthToken {
+  id           Int           @id @default(autoincrement())
+  accessToken  String
+  refreshToken String
+  expiresIn    Int
+  user         User          @relation(fields: [userId], references: [id])
+  userId       Int
+  provider     OAuthProvider @relation(fields: [providerId], references: [id])
+  providerId   Int
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model Tag {
+  id         Int          @id @default(autoincrement())
+  label      String
+  TaggedItem TaggedItem[]
+}
+
+model TaggedItem {
+  tagId     Int
+  tag       Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  productId Int
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@id([tagId, productId])
+}

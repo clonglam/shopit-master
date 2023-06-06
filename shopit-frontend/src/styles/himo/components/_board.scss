@@ -1,0 +1,27 @@
+* {
+  box-sizing: border-box;
+}
+
+.board {
+  background-color: white;
+  display: grid;
+  grid-template-columns: repeat($cols, $tile-size);
+
+  align-self: flex-start;
+}
+
+.next-block {
+  display: grid;
+  grid-template-columns: repeat(4, $tile-size);
+  align-self: flex-start;
+}
+
+.score-board-button {
+  display: block;
+  padding: 1em;
+  border-width: 5px;
+  border-top-color: --button-color-t;
+  border-left-color: --button-color-l;
+  border-right-color: --button-color-r;
+  border-bottom-color: --button-color-b;
+}

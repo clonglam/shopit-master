@@ -1,0 +1,165 @@
+components:
+    schemas:
+      Collection:
+        type: object
+        required:
+           id
+           title
+           label
+           slug
+           description
+           createdAt
+
+        properties:
+          id:
+           type: number
+          title:
+            type: string
+          label:
+            type: string
+          slug:
+            type: string
+          description:
+            type: string
+          imageId:
+            type: number
+          thumbnail:
+            type: string
+          createdAt:
+            type: string
+
+      CollectionBody:
+        type: object
+        required:
+          title
+          slug
+          description
+
+        properties:
+          title:
+            type: string
+          slug:
+            type: string
+          description:
+            type: string
+          thumbnail:
+            type: string
+
+
+paths:
+  /api/collections:
+    get:
+      summary: Get all Collections
+      tags: 
+        - Collections
+ 
+      responses:
+        200:
+          description: Return a Collections list with pagination.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Collection'
+        500:
+          description: Some server error
+
+    post:
+      summary: Create a Collection
+      description: Optional create Iamge
+      tags: 
+        - Collections
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CollectionBody'
+
+      responses:
+        200:
+          description: Return created Collection.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Collection'
+
+        500:
+          description: Some server error
+  
+  /api/collections/{collectionId}:
+    get:
+      summary: Get a collection with details
+      tags: 
+        - Collections
+ 
+      parameters:
+        - in: path
+          name: collectionId
+          required: true
+ 
+      responses:
+        200:
+          description: Return collection with associated collectionId.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Collection'
+        500:
+          description: Some server error
+
+    put:
+      summary: Update a collection
+      tags: 
+        - Collections
+        
+      parameters:
+        - in: path
+          name: collectionId
+          required: true
+ 
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CollectionBody'
+      responses:
+        200:
+          description: The Updated Collection.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Collection'
+        500:
+          description: Some server error
+ 
+    delete:
+      summary: Delete a collection
+      tags: 
+        - Collections
+
+      parameters:
+        - in: path
+          name: collectionId
+          required: true
+ 
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CollectionBody'
+      responses:
+        200:
+          description: The Deleted Collection.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Collection'
+        500:
+          description: Some server error
+ 
+ 

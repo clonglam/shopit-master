@@ -1,0 +1,191 @@
+components:
+    schemas:
+      Product:
+        type: object
+        required:
+           id
+           title
+           slug
+           description
+           price
+           SKU
+           gallery
+           createdAt
+           updatedAt
+        properties:
+          id:
+           type: number
+          title:
+            type: string
+          slug:
+            type: string
+          description:
+            type: string                     
+          SKU:
+            type: string
+          price:
+            type: number
+          hoverImage:
+            type: string
+          thumbnail:
+            type: string
+          collections:
+            type: array
+            $ref: '#/components/schemas/Collection'
+          # createdAt:
+          #   type: dateTime
+
+      ProductParams:
+        type: object
+        required:
+          productId
+        properties:
+          id:
+            type: number
+
+      ProductBody:
+        type: object
+        required:
+          title
+          slug
+          description
+          SKU
+          price
+          quantity
+        properties:
+          title:
+            type: string
+          slug:
+            type: string
+          description:
+            type: string
+          SKU:
+            type: string
+          price:
+            type: number
+          quantity:
+            type: number
+          gallery:
+            type: array
+            items:
+              type: string
+          thumbnail:
+            type: string
+          hoverImage:
+            type: string
+          collectionIds:
+            type: array
+            items:
+              type: number
+ 
+paths:
+  /api/products:
+    get:
+      summary: Get all products
+      tags: 
+        - Products
+ 
+      responses:
+        200:
+          description: Return a products list with pagination.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+        500:
+          description: Some server error
+
+    post:
+      summary: Create a Product
+      description: Optional associate with Genre
+      tags: 
+        - Products
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductBody'
+
+      responses:
+        200:
+          description: Return created User.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+
+        500:
+          description: Some server error
+  
+  /api/products/{productId}:
+    get:
+      summary: Get a Product
+      tags: 
+        - Products
+ 
+      parameters:
+        - in: path
+          name: productId
+          required: true
+ 
+      responses:
+        200:
+          description: Return product with associated productId.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        500:
+          description: Some server error
+
+    put:
+      summary: Update a Product
+      tags: 
+        - Products
+        
+      parameters:
+        - in: path
+          name: productId
+          required: true
+ 
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductBody'
+      responses:
+        200:
+          description: The Updated Product.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        500:
+          description: Some server error
+ 
+    delete:
+      summary: Delete a product
+      tags: 
+        - Products
+
+      parameters:
+        - in: path
+          name: productId
+          required: true
+ 
+      responses:
+        200:
+          description: The Deleted product.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        500:
+          description: Some server error
+ 
+ 
